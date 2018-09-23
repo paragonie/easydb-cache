@@ -1,0 +1,62 @@
+{
+    "name":         "paragonie/easydb-cache",
+    "description":  "Caching Adapter for EasyDB (caches Prepared Statements to reduce round trips)",
+    "keywords": [
+        "database",
+        "caching",
+        "PDO",
+        "sql",
+        "security"
+    ],
+    "license":      "MIT",
+    "type":         "library",
+    "authors": [
+        {
+            "name":     "Scott Arciszewski",
+            "email":    "scott@paragonie.com",
+            "homepage": "https://paragonie.com",
+            "role":     "Developer"
+        },
+        {
+            "name":     "Woody Gilk",
+            "homepage": "https://github.com/shadowhand",
+            "role":     "Contributor"
+        },
+        {
+            "name":     "SignpostMarv",
+            "homepage": "https://github.com/SignpostMarv",
+            "role":     "Contributor"
+        }
+    ],
+    "support": {
+        "issues":   "https://github.com/paragonie/easydb-cache/issues",
+        "email":    "info@paragonie.com",
+        "source":   "https://github.com/paragonie/easydb-cache"
+    },
+    "require": {
+        "php": "^7",
+        "ext-pdo": "*",
+        "paragonie/easydb": "^2.7",
+        "paragonie/hidden-string": "^1",
+        "paragonie/sodium_compat": "^1.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "ParagonIE\\EasyDB\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ParagonIE\\EasyDB\\Tests\\": "tests"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7",
+        "squizlabs/php_codesniffer": "^2.7",
+        "vimeo/psalm": "^1|^2"
+    },
+    "scripts": {
+        "check-style": "phpcs -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src tests",
+        "fix-style": "phpcbf -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src tests"
+    }
+}
