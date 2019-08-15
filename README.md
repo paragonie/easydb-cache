@@ -7,7 +7,7 @@
 [![Downloads](https://img.shields.io/packagist/dt/paragonie/easydb-cache.svg)](https://packagist.org/packages/paragonie/easydb-cache)
 
 Extends [EasyDB](https://github.com/paragonie/easydb), caches Prepared Statements
-to reduce the number of database round trips.
+to reduce the number of database round trips. **Requires PHP 7.2 or newer.**
 
 ## Support Contracts
 
