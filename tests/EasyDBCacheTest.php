@@ -75,6 +75,12 @@ class EasyDBCacheTest extends TestCase
             'Prepared statement #2 cache miss.'
         );
         $this->assertCount(2, $results);
+
+        $this->db->clearStatementCache();
+        $this->assertFalse(
+            $this->db->isCached($query2),
+            'Clear statement cache failed'
+        );
     }
 
     /**
