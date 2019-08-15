@@ -17,7 +17,7 @@ class EasyDBCacheTest extends TestCase
     /** @var string $fuzz */
     private $fuzz;
 
-    /** @var EasyDBCache $db */
+    /** @var EasyDB $db */
     private $db2;
 
     public function setUp()
@@ -88,7 +88,7 @@ class EasyDBCacheTest extends TestCase
      */
     public function testSpeed()
     {
-        if (!extension_loaded('sodium')) {
+        if (!extension_loaded('sodium') || PHP_VERSION_ID >= 70300) {
             $this->markTestSkipped('Do not run this test without ext/sodium');
         }
 
