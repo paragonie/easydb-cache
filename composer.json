@@ -36,9 +36,9 @@
     "require": {
         "php": "^7.2",
         "ext-pdo": "*",
-        "paragonie/easydb": "^2.9",
+        "paragonie/easydb": "^2.10",
         "paragonie/hidden-string": "^1",
-        "paragonie/sodium_compat": "^1.10"
+        "paragonie/sodium_compat": "^1.11"
     },
     "autoload": {
         "psr-4": {
