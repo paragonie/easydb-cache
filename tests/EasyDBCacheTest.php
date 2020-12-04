@@ -20,7 +20,7 @@ class EasyDBCacheTest extends TestCase
     /** @var EasyDB $db */
     private $db2;
 
-    public function setUp()
+    public function setUp(): void
     {
         if (!\extension_loaded('sqlite3')) {
             $this->markTestSkipped('SQLite driver not installed.');
