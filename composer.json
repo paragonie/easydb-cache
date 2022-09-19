@@ -36,8 +36,8 @@
     "require": {
         "php": "^7.2|^8",
         "ext-pdo": "*",
-        "paragonie/easydb": "^2.11",
-        "paragonie/hidden-string": "^1",
+        "paragonie/easydb": "^2.11|^3",
+        "paragonie/hidden-string": "^1|^2",
         "paragonie/sodium_compat": "^1.13"
     },
     "autoload": {
