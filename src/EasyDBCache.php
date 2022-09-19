@@ -3,25 +3,35 @@ declare(strict_types=1);
 namespace ParagonIE\EasyDB;
 
 use ParagonIE\HiddenString\HiddenString;
+use Exception;
+use PDO;
+use PDOStatement;
+use SodiumException;
+use TypeError;
+use function
+    is_string,
+    sodium_crypto_shorthash,
+    sodium_crypto_shorthash_keygen;
 
 /**
  * Class CacheDB
  */
 class EasyDBCache extends EasyDB
 {
-    /** @var HiddenString $cacheKey */
-    protected $cacheKey;
+    protected HiddenString $cacheKey;
 
     /** @var array<string, \PDOStatement> $cache */
-    protected $cache = [];
+    protected array $cache = [];
 
     /**
      * Dependency-Injectable constructor
      *
-     * @param \PDO   $pdo
+     * @param PDO   $pdo
      * @param string $dbEngine
      * @param array  $options             Extra options
      * @param HiddenString|null $cacheKey Key for cache lookups
+     *
+     * @throws Exception
      */
     public function __construct(
         \PDO $pdo,
@@ -32,7 +42,7 @@ class EasyDBCache extends EasyDB
         parent::__construct($pdo, $dbEngine, $options);
         if (\is_null($cacheKey)) {
             $cacheKey = new HiddenString(
-                \sodium_crypto_shorthash_keygen()
+                sodium_crypto_shorthash_keygen()
             );
         }
         $this->cacheKey = $cacheKey;
@@ -51,7 +61,8 @@ class EasyDBCache extends EasyDB
     /**
      * @param string $statement
      * @return bool
-     * @throws \SodiumException
+     *
+     * @throws SodiumException
      */
     public function isCached(string $statement): bool
     {
@@ -59,10 +70,11 @@ class EasyDBCache extends EasyDB
         return !empty($this->cache[$cacheKey]);
     }
 
-        /**
+    /**
      * @param string $statement
      * @return string
-     * @throws \SodiumException
+     *
+     * @throws SodiumException
      */
     protected function getCacheIndex(string $statement): string
     {
@@ -73,17 +85,21 @@ class EasyDBCache extends EasyDB
     }
 
     /**
-     * @param string ...$args
-     * @return \PDOStatement
-     * @throws \SodiumException
+     * @param mixed ...$args
+     * @return PDOStatement
+     *
+     * @throws Exception
+     * @throws SodiumException
      */
-    public function prepare(...$args): \PDOStatement
+    public function prepare(mixed ...$args): PDOStatement
     {
         if (count($args) < 1) {
-            throw new \Error(__FUNCTION__ . ' expects 1 argument, 0 given.');
+            throw new Exception(__FUNCTION__ . ' expects 1 argument, 0 given.');
         }
-        /** @var string $statement */
         $statement = $args[0];
+        if (!is_string($statement)) {
+            throw new TypeError(__FUNCTION__ . ' argument 1 must be a string.');
+        }
         $cacheKey = $this->getCacheIndex($statement);
         if (empty($this->cache[$cacheKey])) {
             $this->cache[$cacheKey] = parent::prepare(...$args);

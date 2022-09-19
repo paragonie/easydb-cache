@@ -4,6 +4,7 @@ namespace ParagonIE\EasyDB\Tests;
 use ParagonIE\EasyDB\EasyDB;
 use ParagonIE\EasyDB\EasyDBCache;
 use PHPUnit\Framework\TestCase;
+use SodiumException;
 
 /**
  * Class EasyDBCacheTest
@@ -11,14 +12,9 @@ use PHPUnit\Framework\TestCase;
  */
 class EasyDBCacheTest extends TestCase
 {
-    /** @var EasyDBCache $db */
-    private $db;
-
-    /** @var string $fuzz */
-    private $fuzz;
-
-    /** @var EasyDB $db */
-    private $db2;
+    private EasyDBCache $db;
+    private string $fuzz;
+    private EasyDB $db2;
 
     public function setUp(): void
     {
@@ -36,7 +32,7 @@ class EasyDBCacheTest extends TestCase
     }
 
     /**
-     * @throws \SodiumException
+     * @throws SodiumException
      */
     public function testPrepareReuse()
     {
@@ -84,7 +80,7 @@ class EasyDBCacheTest extends TestCase
     }
 
     /**
-     * @throws \SodiumException
+     * @throws SodiumException
      */
     public function testSpeed()
     {
