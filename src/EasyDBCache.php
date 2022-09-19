@@ -9,6 +9,7 @@ use PDOStatement;
 use SodiumException;
 use TypeError;
 use function
+    is_null,
     is_string,
     sodium_crypto_shorthash,
     sodium_crypto_shorthash_keygen;
@@ -20,7 +21,7 @@ class EasyDBCache extends EasyDB
 {
     protected HiddenString $cacheKey;
 
-    /** @var array<string, \PDOStatement> $cache */
+    /** @var array<string, PDOStatement> $cache */
     protected array $cache = [];
 
     /**
@@ -34,18 +35,36 @@ class EasyDBCache extends EasyDB
      * @throws Exception
      */
     public function __construct(
-        \PDO $pdo,
+        PDO $pdo,
         string $dbEngine = '',
         array $options = [],
-        HiddenString $cacheKey = null
+        ?HiddenString $cacheKey = null
     ) {
         parent::__construct($pdo, $dbEngine, $options);
-        if (\is_null($cacheKey)) {
+        if (is_null($cacheKey)) {
             $cacheKey = new HiddenString(
                 sodium_crypto_shorthash_keygen()
             );
         }
         $this->cacheKey = $cacheKey;
+    }
+
+    /**
+     * @param EasyDB $db
+     * @param ?HiddenString $cacheKey
+     * @return EasyDBCache
+     * @throws Exception
+     */
+    public static function fromEasyDB(
+        EasyDB $db,
+        ?HiddenString $cacheKey = null
+    ): EasyDBCache {
+        return new EasyDBCache(
+            $db->pdo,
+            $db->dbEngine,
+            $db->options,
+            $cacheKey
+        );
     }
 
     /**

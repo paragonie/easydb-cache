@@ -9,6 +9,46 @@
 Extends [EasyDB](https://github.com/paragonie/easydb), caches Prepared Statements
 to reduce the number of database round trips. **Requires PHP 8.0 or newer.**
 
+## Installing
+
+```terminal
+composer require paragonie/easydb-cache
+```
+
+## Usage
+
+To use EasyDB with prepared statement caching, you can either change the class you're importing
+in your code, or update your code to use `EasyDBCache` instead. Alternatively, you can use the
+named constructor with your existing object.
+
+Afterwards, the EasyDB API is exactly the same as EasyDBCache.
+
+### Updating Import Statements
+
+```diff
+- use ParagonIE\EasyDB\EasyDB;
++ use ParagonIE\EasyDB\EasyDBCache;
+```
+
+### Updating Your Code
+
+```diff
+use ParagonIE\EasyDB\EasyDB;
++ use ParagonIE\EasyDB\EasyDBCache;
+
+- $db = new EasyDB(
++ $db = new EasyDBCache(
+```
+
+### Named Constructor
+
+```diff
++ use ParagonIE\EasyDB\EasyDBCache;
+
+- $db = new EasyDB(/* ... */);
++ $db = EasyDBCache::fromEasyDB(new EasyDB(/* ... */));
+```
+
 ## Support Contracts
 
 If your company uses this library in their products or services, you may be

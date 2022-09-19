@@ -3,6 +3,7 @@ namespace ParagonIE\EasyDB\Tests;
 
 use ParagonIE\EasyDB\EasyDB;
 use ParagonIE\EasyDB\EasyDBCache;
+use ParagonIE\HiddenString\HiddenString;
 use PHPUnit\Framework\TestCase;
 use SodiumException;
 
@@ -29,6 +30,17 @@ class EasyDBCacheTest extends TestCase
         $this->db->insert('foo', ['bar' => 'ezdb', 'baz' => $this->fuzz]);
 
         $this->db2 = new EasyDB($pdo);
+    }
+
+    public function testConstructors()
+    {
+        $pdo = new \PDO('sqlite::memory:');
+        $cacheKey = new HiddenString(sodium_crypto_shorthash_keygen());
+        $easy = new EasyDB($pdo);
+        $c1 = new EasyDBCache($pdo, 'sqlite', [], $cacheKey);
+        $c2 = EasyDBCache::fromEasyDB($easy, $cacheKey);
+        $this->assertTrue($c1->getPdo() instanceof \PDO);
+        $this->assertTrue($c2->getPdo() instanceof \PDO);
     }
 
     /**
