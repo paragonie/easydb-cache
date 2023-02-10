@@ -68,7 +68,7 @@ class EasyDBCache extends EasyDB
     }
 
     /**
-     * Flushes the cache of prepared statentes
+     * Flushes the cache of prepared statements
      *
      * @return void
      */
