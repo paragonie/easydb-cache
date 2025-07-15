@@ -72,7 +72,7 @@ class EasyDBCache extends EasyDB
      *
      * @return void
      */
-    public function clearStatementCache()
+    public function clearStatementCache(): void
     {
         $this->cache = [];
     }
