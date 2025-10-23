@@ -38,7 +38,7 @@
         "ext-pdo": "*",
         "paragonie/easydb": "^3",
         "paragonie/hidden-string": "^2",
-        "paragonie/sodium_compat": "^1.21"
+        "paragonie/sodium_compat": "^1.21|^2"
     },
     "autoload": {
         "psr-4": {
